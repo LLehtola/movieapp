@@ -36,6 +36,17 @@ public class MovieController {
         return new ResponseEntity<>(movies, status);
     }
 
-
+    // GET method for retrieving movies by genre (movie suggestions)
+    @GetMapping(value = "/movies/genre")
+    public ResponseEntity<List<Movie>> getMoviesForGenre(@PathVariable String genre){
+        List<Movie> movies = movieService.getMoviesForGenre(genre);
+        HttpStatus status;
+        if (movieService.movieExists(genre)) {
+            status = HttpStatus.OK;
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(movies, status);
+    }
 
 }
